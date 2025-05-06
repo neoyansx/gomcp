@@ -1,4 +1,4 @@
-module gomcp
+module github.com/neoyansx/gomcp
 
 go 1.24
 
