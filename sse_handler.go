@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/google/uuid"
-	"gomcp/protocol"
+	"github.com/neoyansx/gomcp/protocol"
 	"io"
 	"log"
 	"net/http"

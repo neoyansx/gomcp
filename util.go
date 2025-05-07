@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"gomcp/protocol"
+	"github.com/neoyansx/gomcp/protocol"
 	"io"
 	"log"
 	"net/http"

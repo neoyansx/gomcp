@@ -2,7 +2,7 @@ package protocol
 
 import (
 	"encoding/json"
-	"gomcp/common"
+	"github.com/neoyansx/gomcp/common"
 	"log"
 	"sync"
 )

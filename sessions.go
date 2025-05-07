@@ -2,7 +2,7 @@ package main
 
 import (
 	"errors"
-	"gomcp/protocol"
+	"github.com/neoyansx/gomcp/protocol"
 	"sync"
 )
 

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"gomcp/common"
+	"github.com/neoyansx/gomcp/common"
 	"log"
 	"sync"
 )
