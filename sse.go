@@ -20,6 +20,7 @@ type (
 		chResult    chan *protocol.Response
 		sessions    *sessions
 		httpHandler http.Handler
+		middlewares []func(http.Handler) http.Handler
 	}
 )
 
@@ -31,11 +32,16 @@ func NewSSEServer(url, accessPoint url.URL, mcpSrv protocol.IServer) *SSE {
 		sessions: &sessions{
 			se: make(map[string]*session),
 		},
-		mcpSrv: mcpSrv,
+		mcpSrv:      mcpSrv,
+		middlewares: make([]func(http.Handler) http.Handler, 0),
 	}
 }
 func (s *SSE) Router(router http.Handler) {
 	s.httpHandler = router
+}
+
+func (s *SSE) Middlewares(mw ...func(http.Handler) http.Handler) {
+	s.middlewares = append(s.middlewares, mw...)
 }
 
 func (s *SSE) router() *chi.Mux {
@@ -51,7 +57,10 @@ func (s *SSE) router() *chi.Mux {
 	routers.Use(middleware.Recoverer)
 	routers.Use(middleware.RedirectSlashes)
 	routers.Use(middleware.StripSlashes)
-	routers.Use(middleware.Timeout(60 * time.Minute))
+	routers.Use(middleware.Timeout(30 * time.Second))
+	if len(s.middlewares) > 0 {
+		routers.Use(s.middlewares...)
+	}
 	routers.Get("/", s.Listen())
 	routers.Post(s.accessPoint, s.Messages())
 	return routers
